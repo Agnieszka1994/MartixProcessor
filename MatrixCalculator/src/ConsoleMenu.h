@@ -23,9 +23,8 @@ private:
 	void InverseMatrix();
 
 private:
-
-	std::vector<std::vector<int>> validateInput(int rows, int columns);
-	std::unordered_map<int, std::any> mainMenu{
+// menu options
+	std::unordered_map<int, void (Menu::*)()> mainMenu{
 		{1, &Menu::AddMatrices},
 		{2, &Menu::MultiplyMatrixByConstant},
 		{3, &Menu::MultiplyMatrices},
@@ -46,6 +45,7 @@ private: //input handler
 	T getInput();
 	template<typename T>
 	std::vector<std::vector<T>> getMatrixFromInput(size_t rows, size_t columns);
+	std::vector<size_t> getSizeFromInput();
 };
 
 template<typename T>
@@ -70,14 +70,14 @@ inline std::vector<std::vector<T>> Menu::getMatrixFromInput(size_t rows, size_t 
 {
 	std::vector<std::vector<T>> matrix{};
 	std::cout << "Enter matrix:" << std::endl;
-	int assigned_rows{ 0 };
+	size_t assigned_rows{ 0 };
 
 	while (rows > assigned_rows) {
 		std::vector<T> currentRow(columns, 0);
 
 		try {
-			for (int i = 0; i < columns; i++) {
-				std::cin >> currentRow[i];
+			for (size_t i = 0; i < columns; i++) {
+				currentRow[i] = getInput<T>();
 			}
 		}
 		catch (std::exception&) {
@@ -90,3 +90,4 @@ inline std::vector<std::vector<T>> Menu::getMatrixFromInput(size_t rows, size_t 
 	}
 	return matrix;
 }
+

@@ -12,10 +12,14 @@ public:
 
 public:
 	Matrix operator+(const Matrix& other) const;
-	Matrix operator+=(const Matrix& other);
+	Matrix operator-(const Matrix& other) const;
 	Matrix operator*(const Matrix& other) const;
 	Matrix operator*(const double& scalar) const;
-	std::vector <double>& operator[](const size_t& idx) const;
+	void operator+=(const Matrix& other);
+	void operator-=(const Matrix& other);
+	void operator*=(const Matrix& other);
+	void operator*=(const double& scalar);
+	std::vector <double>& operator[](const size_t& idx);
 
 	Matrix transposeMain() const;
 	Matrix transposeSide() const;

@@ -2,6 +2,8 @@
 #include <exception>
 #include <cmath>
 
+const std::string ERROR_MSG{ "The operation cannot be performed."};
+
 double Matrix::calculateDeterminant() const
 {
     if (m_matrix.size() == 1) {
@@ -53,7 +55,7 @@ Matrix::Matrix(std::vector<std::vector<double>> matrix) : m_matrix{ matrix }
 Matrix Matrix::operator+(const Matrix& other) const
 {
     if (other.m_matrix.size() != m_matrix.size() || other.m_matrix[0].size() != m_matrix[0].size()) {
-        std::invalid_argument error("The operation cannot be performed.");
+        std::invalid_argument error(ERROR_MSG);
         throw error;
     }
     Matrix sum;
@@ -67,7 +69,110 @@ Matrix Matrix::operator+(const Matrix& other) const
     return sum;
 }
 
-Matrix Matrix::operator+=(const Matrix& other)
+Matrix Matrix::operator-(const Matrix& other) const
+{
+    if (other.m_matrix.size() != m_matrix.size() || other.m_matrix[0].size() != m_matrix[0].size()) {
+        std::invalid_argument error(ERROR_MSG);
+        throw error;
+    }
+    Matrix diff;
+    for (size_t i = 0; i < m_matrix.size(); i++) {
+        std::vector<double> newRow{};
+        for (size_t j = 0; j < m_matrix[0].size(); j++) {
+            newRow.push_back(m_matrix[i][j] - other.m_matrix[i][j]);
+        }
+        diff.m_matrix.push_back(newRow);
+    }
+    return diff;
+}
+
+void Matrix::operator+=(const Matrix& other)
+{
+    if (other.m_matrix.size() != m_matrix.size() || other.m_matrix[0].size() != m_matrix[0].size()) {
+        std::invalid_argument error(ERROR_MSG);
+        throw error;
+    }
+    for (size_t i = 0; i < m_matrix.size(); i++) {
+        for (size_t j = 0; j < m_matrix[0].size(); j++) {
+            m_matrix[i][j] += other.m_matrix[i][j];
+        }
+    }
+}
+
+void Matrix::operator-=(const Matrix& other)
+{
+    if (other.m_matrix.size() != m_matrix.size() || other.m_matrix[0].size() != m_matrix[0].size()) {
+        std::invalid_argument error(ERROR_MSG);
+        throw error;
+    }
+    for (size_t i = 0; i < m_matrix.size(); i++) {
+        for (size_t j = 0; j < m_matrix[0].size(); j++) {
+            m_matrix[i][j] -= other.m_matrix[i][j];
+        }
+    }
+}
+
+void Matrix::operator*=(const Matrix& other)
+{
+}
+
+void Matrix::operator*=(const double& scalar)
+{
+}
+
+std::vector<double>& Matrix::operator[](const size_t& idx)
+{
+    // TODO: insert return statement here
+    return m_matrix[idx];
+}
+
+Matrix Matrix::transposeMain() const
+{
+    return Matrix();
+}
+
+Matrix Matrix::transposeSide() const
+{
+    return Matrix();
+}
+
+Matrix Matrix::transposeVertical() const
+{
+    return Matrix();
+}
+
+Matrix Matrix::transposeHorizontal() const
+{
+    return Matrix();
+}
+
+Matrix Matrix::inverse() const
+{
+    return Matrix();
+}
+
+Matrix Matrix::operator*(const Matrix& other) const
+{
+    // The number of columns of the 1st matrix must equal the number of rows of the 2nd matrix
+    if (m_matrix[0].size() != other.m_matrix.size()) {
+        std::invalid_argument error(ERROR_MSG);
+        throw error;
+    }
+    // initialize product matrix
+    Matrix product(std::vector<std::vector<double>>(m_matrix.size(), 
+        std::vector<double>(other.m_matrix[0].size(), 0)));
+    // do the dot product of rows and columns
+    for (size_t x = 0; x < m_matrix.size(); x++) {
+        for (size_t y = 0; y < other.m_matrix[0].size(); y++) {
+            for (size_t z = 0; z < other.m_matrix.size(); z++) {
+                product[x][y] += m_matrix[x][z] * other.m_matrix[z][y];
+            }
+        }
+    }
+    return product;
+}
+
+Matrix Matrix::operator*(const double& scalar) const
 {
     return Matrix();
 }
