@@ -2,27 +2,32 @@
 #include <vector>
 #include <iostream>
 
-class MatrixClass
+class Matrix
 {
 public:
-	std::vector<std::vector<double>> m_matrix{};
-	double i;
+	
+	Matrix();
+	Matrix(std::vector<std::vector<double>> matrix);
+
 
 public:
-	MatrixClass operator+(const std::vector<std::vector<double>>& other) const;
-	MatrixClass operator+=(const std::vector<std::vector<double>>& other);
-	MatrixClass operator*(const std::vector<std::vector<double>>& other) const;
-	MatrixClass operator*(const double& other) const;
+	Matrix operator+(const Matrix& other) const;
+	Matrix operator+=(const Matrix& other);
+	Matrix operator*(const Matrix& other) const;
+	Matrix operator*(const double& scalar) const;
+	std::vector <double>& operator[](const size_t& idx) const;
 
-	friend std::ostream& operator <<(std::ostream& out, std::vector<std::vector<double>>& vec);
-	friend std::istream& operator >>(std::istream& in, std::vector<std::vector<double>>& vec);
+	Matrix transposeMain() const;
+	Matrix transposeSide() const;
+	Matrix transposeVertical() const;
+	Matrix transposeHorizontal() const;
+	Matrix inverse() const;
+	double calculateDeterminant() const;
 
-	void transposeMain();
-	void transposeSide();
-	void transposeVertical();
-	void transposeHorizontal();
+	friend std::ostream& operator <<(std::ostream& out, Matrix matrix);
+	//friend std::istream& operator >>(std::istream& in, std::vector<std::vector<double>>& vec);
 
-	double calculateDeterminant(std::vector<std::vector<double>> helper);
-	std::vector<std::vector<double>> cofactor(std::vector<std::vector<double>> matrix, int rowIdx, int colIdx);
+	std::vector<std::vector<double>> m_matrix{};
+	Matrix cofactor(std::vector<std::vector<double>> matrix, size_t rowIdx, size_t colIdx) const;
 };
 
