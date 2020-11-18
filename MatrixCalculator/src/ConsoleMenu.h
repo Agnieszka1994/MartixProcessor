@@ -14,7 +14,8 @@ public:
 
 private:
 
-	void DisplayMainMenu();
+	static void DisplayMainMenu();
+	static void DisplaySubMenu();
 	void AddMatrices();
 	void MultiplyMatrixByConstant();
 	void MultiplyMatrices();
@@ -31,9 +32,10 @@ private:
 		{4, &Menu::TransposeMatrix},
 		{5, &Menu::CalculateDeterminant},
 		{6, &Menu::InverseMatrix},
-		{7, &Menu::InverseMatrix}
+		// temporary line for testing functions
+		{7, &Menu::InverseMatrix} // target exit function
 	};
-	std::unordered_map<int, std::any> transposeSubMenu{
+	std::unordered_map<int, Matrix(Matrix::*)() const> transposeSubMenu{
 		{1, &Matrix::transposeMain},
 		{2, &Matrix::transposeSide},
 		{3, &Matrix::transposeVertical},

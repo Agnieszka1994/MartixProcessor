@@ -6,7 +6,7 @@ class Matrix
 {
 public:
 	
-	Matrix();
+	Matrix() = default;
 	Matrix(std::vector<std::vector<double>> matrix);
 
 
@@ -15,10 +15,11 @@ public:
 	Matrix operator-(const Matrix& other) const;
 	Matrix operator*(const Matrix& other) const;
 	Matrix operator*(const double& scalar) const;
-	void operator+=(const Matrix& other);
-	void operator-=(const Matrix& other);
-	void operator*=(const Matrix& other);
-	void operator*=(const double& scalar);
+	void operator+=(Matrix& other);
+	void operator-=(Matrix& other);
+	void operator*=(Matrix& other);
+	void operator*=(double& scalar);
+	void operator()(std::vector<std::vector<double>>&& vec);
 	std::vector <double>& operator[](const size_t& idx);
 
 	Matrix transposeMain() const;
@@ -28,9 +29,10 @@ public:
 	Matrix inverse() const;
 	double calculateDeterminant() const;
 
-	friend std::ostream& operator <<(std::ostream& out, Matrix matrix);
-	//friend std::istream& operator >>(std::istream& in, std::vector<std::vector<double>>& vec);
+	friend std::ostream& operator <<(std::ostream& out, const Matrix& matrix);
+	friend std::vector<std::vector<double>>& operator >>(std::vector<std::vector<double>>& vec, Matrix& matrix);
 
+private:
 	std::vector<std::vector<double>> m_matrix{};
 	Matrix cofactor(std::vector<std::vector<double>> matrix, size_t rowIdx, size_t colIdx) const;
 };
