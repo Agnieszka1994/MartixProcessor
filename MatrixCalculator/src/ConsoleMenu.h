@@ -1,16 +1,16 @@
 #pragma once
 # include <vector>
-# include <any>
 # include <unordered_map>
 # include <iostream>
 # include "MatrixClass.h"
 
+extern const std::string ERROR_MSG;
+extern const std::string WRONG_INPUT;
 
 class Menu
 {
 public:
 	void run();
-
 
 private:
 
@@ -33,8 +33,7 @@ private:
 		{4, &Menu::TransposeMatrix},
 		{5, &Menu::CalculateDeterminant},
 		{6, &Menu::InverseMatrix},
-		// temporary line for testing functions
-		{0, &Menu::Exit} // target exit function
+		{0, &Menu::Exit} 
 	};
 	std::unordered_map<int, Matrix(Matrix::*)() const> transposeSubMenu{
 		{1, &Matrix::transposeMain},
@@ -59,7 +58,7 @@ inline T Menu::getInput()
 	// error check
 	while (std::cin.good() == false) {
 		// clear stream
-		std::cout << "Wrong input type! Please try again:" << std::endl;
+		std::cout << WRONG_INPUT << std::endl;
 		std::cin.clear();
 		std::cin.ignore(INT_MAX, '\n');
 		// get input again		
@@ -84,7 +83,7 @@ inline std::vector<std::vector<T>> Menu::getMatrixFromInput(size_t rows, size_t 
 			}
 		}
 		catch (std::exception&) {
-			std::cout << "Something went wrong, please try again" << std::endl;
+			std::cout << ERROR_MSG << std::endl;
 			return{ {} };
 		}
 		matrix.push_back(currentRow);

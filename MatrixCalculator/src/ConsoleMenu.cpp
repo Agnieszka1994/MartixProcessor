@@ -1,7 +1,9 @@
 #include "ConsoleMenu.h"
 #include "ConsoleClear.h"
 #include <limits>
-const std::string ERROR_MSG{ "Something went wrong! Please try again... \n" };
+
+const std::string ERROR_MSG{ "Something went wrong! Please try again... " };
+const std::string WRONG_INPUT{ "Wrong input type! Please try again:" };
 const std::string FIRST_INPUT{ "Enter size of first matrix:" };
 const std::string SECOND_INPUT{ "Enter size of second matrix:" };
 const std::string SINGLE_INPUT{ "Enter size of matrix:" };
