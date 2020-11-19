@@ -168,6 +168,7 @@
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\ConsoleClear.h" />
     <ClInclude Include="src\ConsoleMenu.h" />
     <ClInclude Include="src\MatrixClass.h" />
   </ItemGroup>

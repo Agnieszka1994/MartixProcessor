@@ -8,5 +8,6 @@
   <ItemGroup>
     <ClInclude Include="src\MatrixClass.h" />
     <ClInclude Include="src\ConsoleMenu.h" />
+    <ClInclude Include="src\ConsoleClear.h" />
   </ItemGroup>
 </Project>

@@ -22,6 +22,7 @@ private:
 	void TransposeMatrix();
 	void CalculateDeterminant();
 	void InverseMatrix();
+	void Exit();
 
 private:
 // menu options
@@ -33,7 +34,7 @@ private:
 		{5, &Menu::CalculateDeterminant},
 		{6, &Menu::InverseMatrix},
 		// temporary line for testing functions
-		{7, &Menu::InverseMatrix} // target exit function
+		{0, &Menu::Exit} // target exit function
 	};
 	std::unordered_map<int, Matrix(Matrix::*)() const> transposeSubMenu{
 		{1, &Matrix::transposeMain},
@@ -88,7 +89,6 @@ inline std::vector<std::vector<T>> Menu::getMatrixFromInput(size_t rows, size_t 
 		}
 		matrix.push_back(currentRow);
 		assigned_rows++;
-		std::cin.ignore();
 	}
 	return matrix;
 }

@@ -1,6 +1,7 @@
 #include "ConsoleMenu.h"
-
-const std::string NO_OPTION{ "No such option available!" };
+#include "ConsoleClear.h"
+#include <limits>
+const std::string ERROR_MSG{ "Something went wrong! Please try again... \n" };
 const std::string FIRST_INPUT{ "Enter size of first matrix:" };
 const std::string SECOND_INPUT{ "Enter size of second matrix:" };
 const std::string SINGLE_INPUT{ "Enter size of matrix:" };
@@ -10,17 +11,25 @@ const std::string CHOICE_INPUT{ "Enter your choice:" };
 void Menu::run()
 {
 	while (true) {
-		system("cls");
+		Clear();
 		DisplayMainMenu();
 		std::cout << CHOICE_INPUT << std::endl;
 		int choice = getInput<int>();
+		if (mainMenu.find(choice) == mainMenu.end()) {
+			std::cout << ERROR_MSG << std::endl;
+			std::cin.clear();
+			std::cin.get();
+			continue;
+		}
 		try {
 			(this->*mainMenu[choice])();
 		}
-		catch (...) {
-			std::cout << NO_OPTION << std::endl;
+		catch (std::exception &e) {
+			std::cout << e.what() << std::endl;
 		}
-		std::cin.get();
+		
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		std::cin.clear();
 	}
 }
 
@@ -29,21 +38,24 @@ void Menu::TransposeMatrix()
 	DisplaySubMenu();
 	std::cout << CHOICE_INPUT << std::endl;
 	int choice = getInput<int>();
+	if (!choice) {
+		return;
+	}
 	Matrix a;
 	try {
 
 		std::cout << SINGLE_INPUT << std::endl;
 		std::vector<size_t> sizes = getSizeFromInput();
 		Matrix b(getMatrixFromInput<double>(sizes[0], sizes[1]));
+
 		a = (b.*transposeSubMenu[choice])();
 	}
 	catch (...) {
-		std::cout << NO_OPTION << std::endl;
+		std::cout << ERROR_MSG << std::endl;
 		return;
 	}
 	std::cout << a << std::endl;
 	std::cin.get();
-	
 }
 
 void Menu::DisplayMainMenu()
@@ -55,7 +67,7 @@ void Menu::DisplayMainMenu()
 	std::cout << "4. Transpose matrix" << std::endl;
 	std::cout << "5. Calculate a determinant" << std::endl;
 	std::cout << "6. Inverse matrix" << std::endl;
-	std::cout << "7. Exit" << std::endl;
+	std::cout << "0. Exit" << std::endl;
 }
 
 void Menu::DisplaySubMenu()
@@ -64,6 +76,7 @@ void Menu::DisplaySubMenu()
 	std::cout << "2. Side diagonal" << std::endl;
 	std::cout << "3. Vertical line" << std::endl;
 	std::cout << "4. Horizontal line" << std::endl;
+	std::cout << "0. Back to main menu" << std::endl;
 }
 
 void Menu::AddMatrices()
@@ -83,10 +96,26 @@ void Menu::AddMatrices()
 		return;
 	}
 	std::cout << c << std::endl;
+	std::cin.get();
 }
 
 void Menu::MultiplyMatrixByConstant()
 {
+	Matrix a;
+	double scalar;
+	try {
+		std::cout << SINGLE_INPUT << std::endl;
+		std::vector<size_t> sizes = getSizeFromInput();
+		a(getMatrixFromInput<double>(sizes[0], sizes[1]));
+		std::cout << CONST_INPUT << std::endl;
+		scalar = getInput<double>();
+	}
+	catch (std::invalid_argument& e) {
+		std::cout << e.what() << std::endl;
+		return;
+	}
+	std::cout << a * scalar << std::endl;
+	std::cin.get();
 }
 
 void Menu::MultiplyMatrices()
@@ -101,21 +130,43 @@ void Menu::MultiplyMatrices()
 	try {
 		c = a * b;
 	}
-	catch (std::invalid_argument e) {
+	catch (std::invalid_argument& e) {
 		std::cout << e.what() << std::endl;
 		return;
 	}
 	std::cout << c << std::endl;
+	std::cin.get();
 }
 
 
 
 void Menu::CalculateDeterminant()
 {
+	Matrix a;
+	double determinant;
+	try {
+		std::cout << SINGLE_INPUT << std::endl;
+		std::vector<size_t> sizes = getSizeFromInput();
+		a(getMatrixFromInput<double>(sizes[0], sizes[1]));
+		determinant = a.calculateDeterminant();
+	}
+	catch (std::invalid_argument& e) {
+		std::cout << e.what() << std::endl;
+		return;
+	}
+	std::cout << determinant << std::endl;
+	std::cin.get();
 }
 
 void Menu::InverseMatrix()
 {
+	std::cin.get();
+}
+
+void Menu::Exit()
+{
+	std::cout << "Bye! :)" << std::endl;
+	exit(0);
 }
 
 std::vector<size_t> Menu::getSizeFromInput()
