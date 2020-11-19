@@ -1,9 +1,10 @@
 #include "MatrixClass.h"
 #include <exception>
+#include <iomanip>
 #include <cmath>
 
 const std::string ERROR_MSG{ "Invalid argument! Operation cannot be performed."};
-
+const std::string INVERSE_ERROR{ "This matrix doesn't have an inverse!" };
 
 Matrix::Matrix(std::vector<std::vector<double>> matrix) : m_matrix{ matrix }
 {
@@ -11,7 +12,7 @@ Matrix::Matrix(std::vector<std::vector<double>> matrix) : m_matrix{ matrix }
 
 double Matrix::calculateDeterminant() const
 {
-    if (m_matrix.size() == 0 || m_matrix.size() != m_matrix[0].size()) {
+    if (!squareMatrix()) {
 
         std::invalid_argument error(ERROR_MSG);
         throw error;
@@ -37,6 +38,11 @@ double Matrix::calculateDeterminant() const
         running_sum += (sign * m_matrix[0][col] * sub_determinant);
     }
     return running_sum;
+}
+
+bool Matrix::squareMatrix() const
+{
+    return m_matrix.size() != 0 && m_matrix.size() == m_matrix[0].size();
 }
 
 Matrix Matrix::cofactor(std::vector<std::vector<double>> matrix, size_t rowIdx, size_t colIdx) const
@@ -194,7 +200,7 @@ std::ostream& operator<<(std::ostream& out, const Matrix& matrix)
 {
     for (auto row : matrix.m_matrix) {
         for (auto ele : row) {
-            out << ele << " ";
+            out << std::setw(3) << std::setprecision(2) << ele << " ";
         }
         out << std::endl;
     }
@@ -260,7 +266,34 @@ Matrix Matrix::transposeHorizontal() const
 // TO DO!!!!
 Matrix Matrix::inverse() const
 {
-    return Matrix();
+    double determinant{calculateDeterminant()};
+    // check if the matrix has an inverse
+    if (determinant == 0 || !squareMatrix() || m_matrix.size() == 1) {
+        std::invalid_argument error(INVERSE_ERROR);
+        throw error;
+    }
+    // special case for 2x2 matrix:
+    else if (squareMatrix() && m_matrix.size() == 2) {
+        std::vector<std::vector<double>> inversed{
+            {m_matrix[1][1] / determinant , -1 * m_matrix[0][1] / determinant},
+            {-1 * m_matrix[1][0] / determinant, m_matrix[0][0] / determinant }
+        };
+        return Matrix(inversed);
+    }
+    else {
+        // find matrix of cofactors
+        std::vector<std::vector<double>> cofactors{};
+
+        for (int row = 0; row < m_matrix.size(); row++) {
+            std::vector<double> cofactorRow{};
+            for (int col = 0; col < m_matrix[row].size(); col++) {
+                auto minor = cofactor(m_matrix, row, col);
+                cofactorRow.push_back(pow(-1, row + col) * minor.calculateDeterminant());
+            }
+            cofactors.push_back(cofactorRow);
+        }
+        return Matrix(cofactors).transposeMain();
+    }
 }
 
 

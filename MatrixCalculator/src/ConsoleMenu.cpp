@@ -32,6 +32,7 @@ void Menu::run()
 		
 		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		std::cin.clear();
+		std::cin.get();
 	}
 }
 
@@ -56,8 +57,8 @@ void Menu::TransposeMatrix()
 		std::cout << ERROR_MSG << std::endl;
 		return;
 	}
-	std::cout << a << std::endl;
-	std::cin.get();
+	std::cout << std:: endl << a << std::endl;
+	//std::cin.get();
 }
 
 void Menu::DisplayMainMenu()
@@ -97,8 +98,7 @@ void Menu::AddMatrices()
 		std::cout << e.what() << std::endl;
 		return;
 	}
-	std::cout << c << std::endl;
-	std::cin.get();
+	std::cout << std::endl << c << std::endl;
 }
 
 void Menu::MultiplyMatrixByConstant()
@@ -116,8 +116,7 @@ void Menu::MultiplyMatrixByConstant()
 		std::cout << e.what() << std::endl;
 		return;
 	}
-	std::cout << a * scalar << std::endl;
-	std::cin.get();
+	std::cout << std::endl << a * scalar << std::endl;
 }
 
 void Menu::MultiplyMatrices()
@@ -136,8 +135,7 @@ void Menu::MultiplyMatrices()
 		std::cout << e.what() << std::endl;
 		return;
 	}
-	std::cout << c << std::endl;
-	std::cin.get();
+	std::cout << std::endl << c << std::endl;
 }
 
 
@@ -156,13 +154,22 @@ void Menu::CalculateDeterminant()
 		std::cout << e.what() << std::endl;
 		return;
 	}
-	std::cout << determinant << std::endl;
-	std::cin.get();
+	std::cout << std::endl << "Determinant: " << determinant << std::endl;
 }
 
 void Menu::InverseMatrix()
 {
-	std::cin.get();
+	Matrix a;
+	try {
+		std::cout << SINGLE_INPUT << std::endl;
+		std::vector<size_t> sizes = getSizeFromInput();
+		a = Matrix(getMatrixFromInput<double>(sizes[0], sizes[1])).inverse();
+	}
+	catch (std::invalid_argument& e) {
+		std::cout << e.what() << std::endl;
+		return;
+	}
+	std::cout << std::endl << a << std::endl;
 }
 
 void Menu::Exit()
