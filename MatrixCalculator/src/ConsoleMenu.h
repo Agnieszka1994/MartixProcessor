@@ -13,9 +13,11 @@ public:
 	void run();
 
 private:
-
+	// display functions
 	static void DisplayMainMenu();
 	static void DisplaySubMenu();
+	
+	//matrix processing functions
 	void AddMatrices();
 	void MultiplyMatrixByConstant();
 	void MultiplyMatrices();
@@ -23,9 +25,9 @@ private:
 	void CalculateDeterminant();
 	void InverseMatrix();
 	void Exit();
-
+	
 private:
-// menu options
+	// maps of function addresses for the main menu
 	std::unordered_map<int, void (Menu::*)()> mainMenu{
 		{1, &Menu::AddMatrices},
 		{2, &Menu::MultiplyMatrixByConstant},
@@ -35,6 +37,7 @@ private:
 		{6, &Menu::InverseMatrix},
 		{0, &Menu::Exit} 
 	};
+	// maps of function addresses for the transpose matrix SubMenu
 	std::unordered_map<int, Matrix(Matrix::*)() const> transposeSubMenu{
 		{1, &Matrix::transposeMain},
 		{2, &Matrix::transposeSide},
@@ -42,12 +45,13 @@ private:
 		{4, &Matrix::transposeHorizontal}
 	};
 
-private: //input handler
+private: 
+	//input handler functions
 	template<typename T>
-	T getInput();
+	static T getInput();
 	template<typename T>
-	std::vector<std::vector<T>> getMatrixFromInput(size_t rows, size_t columns);
-	std::vector<size_t> getSizeFromInput();
+	static std::vector<std::vector<T>> getMatrixFromInput(size_t rows, size_t columns);
+	static std::vector<size_t> getSizeFromInput();
 };
 
 template<typename T>

@@ -63,7 +63,6 @@ void Menu::TransposeMatrix()
 
 void Menu::DisplayMainMenu()
 {
-	// to be upgraded
 	std::cout << "1. Add matrices" << std::endl;
 	std::cout << "2. Multiply matrix by a constant" << std::endl;
 	std::cout << "3. Multiply matrices" << std::endl;
@@ -137,8 +136,6 @@ void Menu::MultiplyMatrices()
 	}
 	std::cout << std::endl << c << std::endl;
 }
-
-
 
 void Menu::CalculateDeterminant()
 {

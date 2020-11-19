@@ -9,7 +9,6 @@ public:
 	Matrix() = default;
 	Matrix(std::vector<std::vector<double>> matrix);
 
-
 public:
 	Matrix operator+(const Matrix& other) const;
 	Matrix operator-(const Matrix& other) const;

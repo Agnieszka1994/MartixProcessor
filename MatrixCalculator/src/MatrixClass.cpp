@@ -200,7 +200,7 @@ std::ostream& operator<<(std::ostream& out, const Matrix& matrix)
 {
     for (auto row : matrix.m_matrix) {
         for (auto ele : row) {
-            out << std::setw(3) << std::setprecision(2) << ele << " ";
+            out << std::setw(4) << std::right << std::setprecision(2) << ele << " ";
         }
         out << std::endl;
     }
@@ -263,7 +263,7 @@ Matrix Matrix::transposeHorizontal() const
     }
     return Matrix(transposed);
 }
-// TO DO!!!!
+
 Matrix Matrix::inverse() const
 {
     double determinant{calculateDeterminant()};
@@ -292,6 +292,7 @@ Matrix Matrix::inverse() const
             }
             cofactors.push_back(cofactorRow);
         }
+        // return matrix of cofactors transposed about the main diagonal
         return Matrix(cofactors).transposeMain();
     }
 }
