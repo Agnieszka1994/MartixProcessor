@@ -8,9 +8,10 @@ namespace mtx
 	public:
 
 		Matrix() = default;
-		Matrix(std::vector<std::vector<double>> matrix);
+		explicit Matrix(std::vector<std::vector<double>> matrix);
 
 	public:
+
 		Matrix operator+(const Matrix& other) const;
 		Matrix operator-(const Matrix& other) const;
 		Matrix operator*(const Matrix& other) const;
@@ -30,7 +31,7 @@ namespace mtx
 		double calculateDeterminant() const;
 		bool squareMatrix() const;
 
-		friend std::ostream& operator <<(std::ostream& out, const Matrix& matrix);
+		friend std::ostream& operator <<(std::ostream& out, const Matrix& matrix);	
 		friend std::vector<std::vector<double>>& operator >>(std::vector<std::vector<double>>& vec, Matrix& matrix);
 
 	private:

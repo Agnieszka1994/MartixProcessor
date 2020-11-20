@@ -3,6 +3,7 @@
 #include "ConsoleMenu.h"
 
 using namespace mtx;
+
 int main() {
 
 	Menu menu;
