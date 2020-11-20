@@ -1,39 +1,42 @@
 #pragma once
 #include <vector>
 #include <iostream>
-
-class Matrix
+namespace mtx 
 {
-public:
-	
-	Matrix() = default;
-	Matrix(std::vector<std::vector<double>> matrix);
+	class Matrix
+	{
+	public:
 
-public:
-	Matrix operator+(const Matrix& other) const;
-	Matrix operator-(const Matrix& other) const;
-	Matrix operator*(const Matrix& other) const;
-	Matrix operator*(const double& scalar) const;
-	void operator+=(Matrix& other);
-	void operator-=(Matrix& other);
-	void operator*=(Matrix& other);
-	void operator*=(double& scalar);
-	void operator()(std::vector<std::vector<double>>&& vec);
-	std::vector <double>& operator[](const size_t& idx);
+		Matrix() = default;
+		Matrix(std::vector<std::vector<double>> matrix);
 
-	Matrix transposeMain() const;
-	Matrix transposeSide() const;
-	Matrix transposeVertical() const;
-	Matrix transposeHorizontal() const;
-	Matrix inverse() const;
-	double calculateDeterminant() const;
-	bool squareMatrix() const;
+	public:
+		Matrix operator+(const Matrix& other) const;
+		Matrix operator-(const Matrix& other) const;
+		Matrix operator*(const Matrix& other) const;
+		Matrix operator*(const double& scalar) const;
+		void operator+=(Matrix& other);
+		void operator-=(Matrix& other);
+		void operator*=(Matrix& other);
+		void operator*=(double& scalar);
+		void operator()(std::vector<std::vector<double>>&& vec);
+		std::vector <double>& operator[](const size_t& idx);
 
-	friend std::ostream& operator <<(std::ostream& out, const Matrix& matrix);
-	friend std::vector<std::vector<double>>& operator >>(std::vector<std::vector<double>>& vec, Matrix& matrix);
+		Matrix transposeMain() const;
+		Matrix transposeSide() const;
+		Matrix transposeVertical() const;
+		Matrix transposeHorizontal() const;
+		Matrix inverse() const;
+		double calculateDeterminant() const;
+		bool squareMatrix() const;
 
-private:
-	std::vector<std::vector<double>> m_matrix{};
-	Matrix cofactor(std::vector<std::vector<double>> matrix, size_t rowIdx, size_t colIdx) const;
-};
+		friend std::ostream& operator <<(std::ostream& out, const Matrix& matrix);
+		friend std::vector<std::vector<double>>& operator >>(std::vector<std::vector<double>>& vec, Matrix& matrix);
+
+	private:
+		std::vector<std::vector<double>> m_matrix{};
+		Matrix cofactor(std::vector<std::vector<double>> matrix, size_t rowIdx, size_t colIdx) const;
+	};
+}
+
 
