@@ -21,6 +21,7 @@ namespace mtx
 		void operator*=(Matrix& other);
 		void operator*=(double& scalar);
 		void operator()(std::vector<std::vector<double>>&& vec);
+		void operator()(const std::vector<std::vector<double>>& vec);
 		std::vector <double>& operator[](const size_t& idx);
 
 		Matrix transposeMain() const;

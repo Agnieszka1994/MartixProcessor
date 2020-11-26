@@ -200,6 +200,11 @@ namespace mtx
         m_matrix = vec;
     }
 
+    void Matrix::operator()(const std::vector<std::vector<double>>& vec)
+    {
+        m_matrix = vec;
+    }
+
     std::ostream& operator<<(std::ostream& out, const Matrix& matrix)
     {
         for (auto row : matrix.m_matrix) {
