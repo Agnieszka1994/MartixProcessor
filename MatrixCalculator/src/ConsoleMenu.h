@@ -40,7 +40,7 @@ namespace mtx
 			{0, &Menu::Exit}
 		};
 		// maps of function addresses for the transpose matrix SubMenu
-		std::unordered_map<int, Matrix(Matrix::*)() const> transposeSubMenu{
+		std::unordered_map<int, Matrix(Matrix::*)() const noexcept> transposeSubMenu{
 			{1, &Matrix::transposeMain},
 			{2, &Matrix::transposeSide},
 			{3, &Matrix::transposeVertical},

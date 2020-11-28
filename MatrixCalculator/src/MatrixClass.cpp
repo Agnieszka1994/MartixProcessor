@@ -227,7 +227,7 @@ namespace mtx
         return m_matrix[idx];
     }
     // Transpose matrix about main diagonal
-    Matrix Matrix::transposeMain() const
+    Matrix Matrix::transposeMain() const noexcept
     {
         std::vector<std::vector<double>>transposed{ m_matrix[0].size(),
             std::vector<double>{} };
@@ -239,7 +239,7 @@ namespace mtx
         return Matrix(transposed);
     }
     // Transpose matrix about secondary diagonal
-    Matrix Matrix::transposeSide() const
+    Matrix Matrix::transposeSide() const noexcept
     {
         std::vector<std::vector<double>>transposed{ m_matrix[0].size(),
             std::vector<double>{} };
@@ -251,7 +251,7 @@ namespace mtx
         return Matrix(transposed);
     }
     // Transpose matrix about vertical line
-    Matrix Matrix::transposeVertical() const
+    Matrix Matrix::transposeVertical() const noexcept
     {
         Matrix transposed{ *this };
         for (int x = 0; x < m_matrix.size(); x++) {
@@ -262,7 +262,7 @@ namespace mtx
         return Matrix(transposed);
     }
     // Transpose matrix about horizontal line
-    Matrix Matrix::transposeHorizontal() const
+    Matrix Matrix::transposeHorizontal() const noexcept
     {
         Matrix transposed{ *this };
         for (int x = 0, z = m_matrix.size() - 1; x < m_matrix.size(); x++, z--) {

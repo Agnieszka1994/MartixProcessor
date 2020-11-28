@@ -24,10 +24,10 @@ namespace mtx
 		void operator()(const std::vector<std::vector<double>>& vec);
 		std::vector <double>& operator[](const size_t& idx);
 
-		Matrix transposeMain() const;
-		Matrix transposeSide() const;
-		Matrix transposeVertical() const;
-		Matrix transposeHorizontal() const;
+		Matrix transposeMain() const noexcept;
+		Matrix transposeSide() const noexcept;
+		Matrix transposeVertical() const noexcept;
+		Matrix transposeHorizontal() const noexcept;
 		Matrix inverse() const;
 		double calculateDeterminant() const;
 		bool squareMatrix() const;
