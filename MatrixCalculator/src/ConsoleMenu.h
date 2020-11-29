@@ -2,6 +2,7 @@
 # include <vector>
 # include <unordered_map>
 # include <iostream>
+# include <climits>
 # include "MatrixClass.h"
 
 namespace mtx
